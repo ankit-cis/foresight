@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-header">
+    <%= @video.video_number %> : Video Information
+    <%
+      if @video.status.status_constant == "REPORTED"
+        class_name = "btn-danger"
+      elsif @video.status.status_constant == "IN_PROGRESS"
+        class_name = "btn-warning"
+      else
+        class_name = "btn-success"
+      end 
+    %>
+    <div class="pull-right">
+      <%= @video.false_alarm ? '<span class="btn btn-warning btn-rounded btn-sm">False Alarm</span>'.html_safe : "" %>
+    
+      <span class="btn btn-rounded btn-sm <%= class_name %>"><%= @video.status.name %></span>
+    </div>
+    
+  </div>
+  <div class="card-block">
+
+    <div class="row">
+      <div class="col-xs-6 col-md-6">
+  		  <strong>Status:</strong>
+  		  <p><%= @video.status.name %></p>
+      </div>
+
+      <div class="col-xs-6 col-md-6">
+        <strong>Reported by:</strong>
+        <p><%= link_to @video.user.display_name, @video.user %></p>
+      </div>
+
+
+      <div class="col-xs-6 col-md-6">            
+        <strong>Contact Number:</strong>
+        <p><%= @video.user.telephone_number %></p>
+      </div>
+      <div class="col-xs-6 col-md-6">            
+        <strong>Email Address:</strong>
+        <p><%= @video.user.email %></p>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <strong>Vehicle Registration:</strong>
+        <p><%= @video.user.vehicle_registration %></p>
+      </div>
+      <div class="col-xs-6 col-md-6">            
+        <strong>Accident Occured:</strong>
+        <p><%= @video.crash_detected_time != nil ? @video.crash_detected_time.strftime("%e %B %Y at %I:%M %p") : @video.created_at.strftime("%e %B %Y at %I:%M %p") %></p>
+      </div>
+      
+      <div class="col-xs-6 col-md-6">            
+        <strong>Video Reported:</strong>
+        <p><%= @video.created_at.strftime("%e %B %Y at %I:%M %p") %></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card-footer text-center">
+    <%- if Accident.unscoped { @video.accident.nil? } %>
+      <p>Accident details not posted</p>
+    <% else %>
+      <%= link_to "Accident details", @video.accident, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

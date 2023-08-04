@@ -1,0 +1,64 @@
+<div class="card text-center">
+  <div class="card-header">
+    <a data-toggle="collapse" href="#collapseExample" aria-controls="collapseExample">
+        <%= @active_search != true ? "Show" : "" %> Accident Search
+    </a>
+  </div>
+  <div class="collapse <%= @active_search == true ? "show" : "" %>" id="collapseExample" >
+  
+  	<%= search_form_for [@search], url: search_accidents_path, method: :get, :builder => SimpleForm::FormBuilder do | f | %>
+      <div class="card-block">
+          <div class="row">
+            <div class="col-md-4">
+              <%= f.input :user_surname_cont, label: "Surname", placeholder: "Surname", :required => false %>
+            </div>
+            <div class="col-md-4">
+              <%= f.input :user_forename_cont, label: "Forename", :placeholder => "Forename", :required => false %>
+            </div>
+            <div class="col-md-4">
+              <%= f.input :registration_number_cont, label: "Vehicle Registration", :placeholder => "Vehicle Registration", :required => false %>
+            </div>
+          
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <%= f.input :created_at_gteq, label: "Start date", placeholder: "Start date", :required => false, :input_html => { :class =>  'datepicker' } %>
+            </div>
+            <div class="col-md-4">
+              <%= f.input :created_at_lteq, label: "End date", :placeholder => "End date", :required => false, :input_html => { :class =>  'datepicker' } %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <%= f.input :user_email_cont, label: "Email", placeholder: "Email", :required => false %>
+            </div>
+            <div class="col-md-4">
+              <%= f.input :user_telephone_number_cont, label: "Telephone Number", :placeholder => "Telephone Number", :required => false %>
+            </div>
+            <%- if current_user.is_admin %>
+              <div class="col-md-4">
+                <%= f.input :company_id_eq,:collection => Company.all, :label_method => :name, :value_method => :id,:label => "Company" ,:include_blank => true, :required => false %>
+              </div>
+            <% end %>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-12 text-center">
+            </div>
+          </div>
+      </div>
+      <div class="card-footer text-muted">
+      <%= link_to "Clear", request.path, class:"cancel-button" %>
+        <%= f.submit "Search", :class => "btn btn-primary" %>
+      </div>
+  	<% end %>
+  </div>
+</div>
+
+<% content_for :javascript do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.datepicker').datepicker({format: 'dd-mm-yyyy'});
+    });
+  </script>
+<% end %>

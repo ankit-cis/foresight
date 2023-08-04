@@ -1,0 +1,20 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+  <li class="breadcrumb-item"><a href="/users">Users</a></li>
+  <li class="breadcrumb-item active"><%= @user.display_name %></li>
+  <div class="pull-right">
+    <%= link_to "Edit", edit_user_path(@user), class: "btn btn-primary btn-rounded btn-sm" %>
+  </div>
+</ol>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= render :partial => 'user_information' %>
+    <%= render :partial => 'profile_details' %>
+  </div>
+  <div class="col-md-6">
+    <%= render :partial => 'license_information' %>
+    <%= render :partial => 'user_devices' %>    
+
+  </div>
+</div>

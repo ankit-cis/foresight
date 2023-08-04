@@ -1,0 +1,68 @@
+<%= simple_form_for(message) do |f| %>
+  <% if message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(message.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% message.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="card">
+        <div class="card-header">
+          Message
+          <%= f.submit "Save", class: "btn btn-primary btn-rounded btn-sm pull-right" %>
+          
+        </div>
+        <div class="card-block">
+
+          <%- if current_user && current_user.is_admin %>
+          <% end %>
+          <div class="row">
+            <div class="col-xs-3 col-md-3">
+              <%= f.association :unscoped_company, label: "Select Company" %>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <%= f.input :title %>
+            </div>
+
+            <div class="col-xs-3 col-md-3">
+              <%= f.input :body %>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <%= f.input :expires %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-12">
+              <%= f.text_area :content, id: "tinymce", class: "tinymce", rows: 40, cols: 120  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>//<![CDATA[
+
+TinyMCERails.configuration.default = {
+  selector: "textarea.tinymce",
+  toolbar: [
+    "uploadimage | link | formatselect fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify bullist numlist | outdent indent",
+  ],
+  font_formats: 'Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n',
+
+  fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+  menubar:false,
+  plugins: "uploadimage,textcolor,image,link,code,codesample,autoresize,imagetools,media,table,insertdatetime,charmap,visualblocks,fullscreen"
+};TinyMCERails.initialize('default', {
+  
+});
+//]]></script>

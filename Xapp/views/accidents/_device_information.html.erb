@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-header">
+    Device Information
+  </div>
+  <div class="card-block">
+
+    <div class="row">
+      <div class="col-xs-6 col-md-6">
+  		  <strong>Platform:</strong>
+  		  <p><%= @accident.video.system_name %></p>
+      </div>
+
+      <div class="col-xs-6 col-md-6">
+  		  <strong>Platform Version:</strong>
+  		  <p><%= @accident.video.system_version %></p>
+      </div>
+
+      <div class="col-xs-6 col-md-6">
+  		  <strong>Device Model:</strong>
+  		  <p><%= @accident.video.device_model %></p>
+      </div>
+
+      <div class="col-xs-6 col-md-6">            
+        <strong>App Version:</strong>
+        <p><%= @accident.video.app_version %></p>
+      </div>
+    </div>
+  </div>
+</div>

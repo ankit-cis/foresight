@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html style="margin: 0;padding: 0;" xmlns="http://www.w3.org/1999/xhtml">
+
+  <%= render :partial => 'user_mailer/header' %>
+
+  <body class="clean-body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #FFFFFF">
+    <div class="nl-container" style="min-width: 320px;Margin: 0 auto;background-color: #FFFFFF">
+    
+      <%= render :partial => 'user_mailer/4sight_header' %>
+
+      <div style="background-color:transparent;">
+        <div rel="col-num-container-box" style="Margin: 0 auto;min-width: 320px;max-width: 500px;width: 320px;width: calc(19000% - 98300px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;" class="block-grid ">
+          <div style="border-collapse: collapse;display: table;width: 100%;">
+                
+            <div rel="col-num-container-box" class="col num12" style="min-width: 320px;max-width: 500px;width: 320px;width: calc(18000% - 89500px);background-color: transparent;">
+              <div style="background-color: transparent; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;">
+                <div style="line-height: 15px; font-size:1px">&nbsp;</div>
+
+                <div style="Margin-right: 10px; Margin-left: 10px;">
+                  <div style="line-height: 10px; font-size: 1px">&nbsp;</div>
+                  <div style="font-size:12px;line-height:14px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;">
+                          
+                    <p style="margin: 0;font-size: 12px;line-height: 14px;text-align: left">
+                  
+                      <span style="font-size: 24px; line-height: 28px;">
+                        <strong>
+                          <span style="line-height: 28px; font-size: 24px;">
+                            <span style="color: rgb(213, 89, 0); line-height: 28px; font-size: 24px;">
+                                Accident details have been received.
+                            </span>
+                          </span>
+                        </strong>
+                      </span>
+                    </p>
+                  </div>
+                  <div style="Margin-right: 10px; Margin-left: 10px;">
+                    <div style="line-height: 10px; font-size: 1px">&nbsp;</div>
+                    <div style="line-height: 10px; font-size: 1px">&nbsp;</div>
+                    <div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;">
+                    <p>Hi there,</p>
+                    <p>A new accident has been reported by <%= @accident.user.display_name %></p>
+                    <p>Email: <%= @accident.user.email %></p>
+                    <p>Address: <%= @accident.user.address %></p>
+                    <p>Contact Number: <%= @accident.user.telephone_number %></p>
+                    <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                        <tbody>
+                        <tr>
+                            <td align="left">
+                                <table border="0" cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                    <tr>
+                                        <td> <a href="<%= accident_url(@accident, subdomain: @accident.user.company.subdomain) %>" target="_blank">View Accient Details</a> </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                      
+                    <div style="line-height: 25px; font-size: 1px">&nbsp;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

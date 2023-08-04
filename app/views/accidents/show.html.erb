@@ -1,0 +1,37 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+  <li class="breadcrumb-item"><a href="/accidents">Accidents</a></li>
+  <li class="breadcrumb-item active">Accident</li>
+</ol>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= render :partial => 'accident_information' %>
+    <%= render :partial => 'location' %>
+  </div>
+  <div class="col-md-6">
+    <%= render :partial => 'accident_viewer' %>
+    <%= render :partial => 'device_information' %>
+  </div>
+</div>
+
+<% content_for :javascript do %>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    
+    $("#fancybox").fancybox({
+    	openEffect	: 'elastic',
+    	closeEffect	: 'elastic',
+
+    	helpers : {
+    		title : {
+    			type : 'inside'
+    		}
+    	}
+    });
+});
+</script>
+<% end %>
+

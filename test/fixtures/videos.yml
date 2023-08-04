@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  company: one
+  lat: 
+  long: 
+  accident: one
+  video_data: MyString
+
+two:
+  user: two
+  company: two
+  lat: 
+  long: 
+  accident: two
+  video_data: MyString

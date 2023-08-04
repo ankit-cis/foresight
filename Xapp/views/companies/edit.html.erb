@@ -1,0 +1,8 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+  <li class="breadcrumb-item"><a href="/videos">Companies</a></li>
+  <li class="breadcrumb-item"><%= link_to @company.name, @company %></li>
+  <li class="breadcrumb-item active">Edit</li>
+</ol>
+
+<%= render 'form', company: @company %>

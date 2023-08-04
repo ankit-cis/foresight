@@ -1,0 +1,67 @@
+<div class="tab-pane tab-pad active fade in show" id="details" role="tabpanel">
+
+  <div class="row">
+    <div class="col-xs-4 col-md-4">
+		  <strong>Name:</strong>
+		  <p><%= @company.name %></p>
+    </div>
+
+    <div class="col-xs-6 col-md-4">
+      <strong>Company type:</strong>
+      <p><%= @company.company_type.name %></p>
+    </div>
+    <div class="col-xs-4 col-md-4">            
+      <strong>Telephone Number:</strong>
+      <p><%= @company.telephone_number %></p>
+    </div>
+
+    <div class="col-xs-4 col-md-4">
+      <strong>Address 1:</strong>
+      <p><%= @company.address_1 %></p>
+    </div>
+
+    <div class="col-xs-4 col-md-4">
+      <strong>Address 2:</strong>
+      <p><%= @company.address_2 %></p>
+    </div>
+    
+    <div class="col-xs-4 col-md-4">
+      <strong>Town:</strong>
+      <p><%= @company.town %></p>
+    </div>
+
+    <div class="col-xs-4 col-md-4">
+      <strong>County:</strong>
+      <p><%= @company.county %></p>
+    </div>
+
+    <div class="col-xs-4 col-md-4">
+      <strong>Postcode:</strong>
+      <p><%= @company.postcode %></p>
+    </div>
+    <div class="col-xs-4 col-md-4">
+      <strong>Notification email:</strong>
+      <p><%= @company.notification_email %></p>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-xs-4 col-md-4">            
+      <strong>Payment type:</strong>
+      <p><%= @company.payment_type.name %></p>
+    </div>
+
+    <div class="col-xs-4 col-md-4">
+      <strong>App licenses:</strong>
+      <p><%= @company.app_licenses %></p>
+    </div>
+    <%- if current_user.is_admin %>
+    
+      <div class="col-xs-4 col-md-4">
+        <strong>Default Free Period:</strong>
+        <p><%= @company.free_period.name if !@company.free_period.nil? %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
+  

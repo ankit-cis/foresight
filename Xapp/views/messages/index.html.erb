@@ -1,0 +1,39 @@
+<%- company_admin_user = current_user.company_users.find_by_company_id(current_user.company_id) %>
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+  <li class="breadcrumb-item active">Messages</li>
+  <div class="pull-right">
+    <%= link_to raw("<i class='fa fa-plus'></i> Add Message"), new_message_path, class: "btn btn-primary btn-rounded btn-sm" %>
+    
+  </div>
+</ol>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <%-if current_user && current_user.is_admin? %>
+        <th>Company</th>
+      <% end %>
+      <th>Body</th>
+      <th>Expires</th>
+      <th>Send</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @messages.each do |message| %>  
+      <tr>
+        <td><%= link_to message.title, message %></td>
+        <%-if current_user && current_user.is_admin? %>
+          <td><%= message.company.name %></td>
+        <% end %>
+        <td><%= message.body %></td>
+        <td><%= message.expires %></td>
+        <td><%= link_to "Send Message", send_message_message_path(message), class: "btn btn-primary btn-rounded btn-sm" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @messages %>

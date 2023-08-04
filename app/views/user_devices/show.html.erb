@@ -1,0 +1,21 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+  <li class="breadcrumb-item"><a href="/users">Users</a></li>
+  <li class="breadcrumb-item"><%= link_to @user.display_name, @user %></li>
+  <li class="breadcrumb-item active">Device</li>
+  <div class="pull-right">
+    <%= link_to "Edit", edit_user_path(@user), class: "btn btn-primary btn-rounded btn-sm" %>
+  </div>
+</ol>
+
+<div class="row">
+  <div class="col-md-12">
+  <%= render :partial => 'user_device' %>    
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+  <%= render :partial => 'user_device_events' %>
+  </div>
+</div>

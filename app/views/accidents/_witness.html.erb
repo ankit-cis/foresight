@@ -1,0 +1,27 @@
+<div class="tab-pane" id="witnesses" role="tabpanel">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Telephone</th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- if @accident.witnesses.count > 0 %>
+        <%- @accident.witnesses.each do |witness| %>
+          <tr>
+            <td><%= witness.name %></td>
+            <td><%= witness.telephone_number %></td>
+            <td><%= witness.address %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="5" class="text-xs-center">No witness details have been captured</td>
+        </tr>
+      <% end %>
+    
+      </tbody>
+  </table>
+</div>

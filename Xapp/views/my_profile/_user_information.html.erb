@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-header">
+    User Information
+  </div>
+  <div class="card-block">
+
+    <div class="row">
+      <div class="col-xs-6 col-md-6">
+  		  <strong>Email:</strong>
+  		  <p><%= @user.email %></p>
+      </div>
+
+      <div class="col-xs-6 col-md-6">
+        <strong>Forename:</strong>
+        <p><%= @user.forename %></p>
+      </div>
+
+      <div class="col-xs-6 col-md-6">
+        <strong>Surname:</strong>
+        <p><%= @user.surname %></p>
+      </div>
+
+      <div class="col-xs-6 col-md-6">            
+        <strong>Title:</strong>
+        <p><%= @user.title.nil? ? "" : @user.title.name %></p>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <strong>App License:</strong>
+        <% company_user = @user.company_users.find_by_company_id(@user.company_id) %>
+        <p><%= !company_user.nil? && !company_user.license_code.nil? && company_user.license_code.length > 0 ? company_user.license_code : "" %></p>
+      </div>
+      <div class="col-xs-6 col-md-6">            
+        <strong>Promo Code:</strong>
+        <p><%= @user.promo_code %></p>
+      </div>
+    </div>
+  </div>
+</div>

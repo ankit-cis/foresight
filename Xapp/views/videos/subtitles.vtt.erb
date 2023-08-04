@@ -1,0 +1,12 @@
+WEBVTT
+
+<% count = 0 %>
+<% @video.speeds.each do |speed| %>
+
+<%= count %>
+<%= speed.start_time %> --> <%= speed.end_time %>
+<c.background><i><%= speed.speed %> mph</i></c>
+
+<% count = count + 1 %>
+
+<% end %>

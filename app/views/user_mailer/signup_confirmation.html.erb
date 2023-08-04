@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html style="margin: 0;padding: 0;" xmlns="http://www.w3.org/1999/xhtml">
+
+  <%= render :partial => 'header' %>
+
+  <body class="clean-body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #FFFFFF">
+    <div class="nl-container" style="min-width: 320px;Margin: 0 auto;background-color: #FFFFFF">
+    
+      <%= render :partial => '4sight_header' %>
+
+      <div style="background-color:transparent;">
+        <div rel="col-num-container-box" style="Margin: 0 auto;min-width: 320px;max-width: 500px;width: 320px;width: calc(19000% - 98300px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;" class="block-grid ">
+          <div style="border-collapse: collapse;display: table;width: 100%;">
+                
+            <div rel="col-num-container-box" class="col num12" style="min-width: 320px;max-width: 500px;width: 320px;width: calc(18000% - 89500px);background-color: transparent;">
+              <div style="background-color: transparent; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;">
+                <div style="line-height: 15px; font-size:1px">&nbsp;</div>
+
+                <div style="Margin-right: 10px; Margin-left: 10px;">
+                  <div style="line-height: 10px; font-size: 1px">&nbsp;</div>
+                  <div style="font-size:12px;line-height:14px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;">
+                          
+                    <p style="margin: 0;font-size: 12px;line-height: 14px;text-align: left">
+                  
+                      <span style="font-size: 24px; line-height: 28px;">
+                        <strong>
+                          <span style="line-height: 28px; font-size: 24px;">
+                            <span style="color: rgb(213, 89, 0); line-height: 28px; font-size: 24px;">
+                                Welcome To 4Sight
+                            </span>
+                          </span>
+                        </strong>
+                      </span>
+                    </p>
+                  </div>
+                  <div style="Margin-right: 10px; Margin-left: 10px;">
+                    <div style="line-height: 10px; font-size: 1px">&nbsp;</div>
+                    <div style="line-height: 10px; font-size: 1px">&nbsp;</div>
+                    <div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;">
+                      <p style="margin-top: 0; color: #74787E; font-size: 16px; line-height: 1.5em;">
+                        Thank you for choosing 4Sight, your all seeing guardian
+                      </p>
+                      <p style="margin-top: 0; color: #74787E; font-size: 16px; line-height: 1.5em;">
+                        Your log in details are as follows:
+                      </p>
+                      <p style="margin-top: 0; color: #74787E; font-size: 16px; line-height: 1.5em;">
+                        Username: <%= @user.email %>
+                      </p>
+                      <p style="margin-top: 0; color: #74787E; font-size: 16px; line-height: 1.5em;">
+                        Password: <%= @password %>
+                      </p>
+
+                      <div align="center" class="button-container center" style="Margin-right: 10px;Margin-left: 10px;">
+                        <div style="line-height:10px;font-size:1px">&nbsp;</div>
+                        <a href="<%= login_url %>" target="_blank" style="color: #ffffff; text-decoration: none;">
+                          <div style="color: #ffffff; background-color: #d55900; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; max-width: 103px; width: auto; border-top: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent; border-left: 0px solid transparent; padding-top: 5px; padding-right: 20px; padding-bottom: 5px; padding-left: 20px; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-align: center;">
+                            <span style="font-size:12px;line-height:24px;">Log In</span>
+                          </div>
+                        </a>
+                        <div style="line-height:10px;font-size:1px">&nbsp;</div>
+                      </div><!--BUTTON END -->
+                     
+                     
+                      <div style="line-height:10px;font-size:1px">&nbsp;</div>
+                      <p style="margin-top: 0; color: #74787E; font-size: 16px; line-height: 1.5em;">
+                        Download the 4sight app and log in using the above credentials.
+                      </p>
+                      <p style="margin-top: 0; color: #74787E; font-size: 16px; line-height: 1.5em;">
+                        If you should experience any issues please contact us.
+                      </p>
+                      <div style="line-height: 10px; font-size: 1px">&nbsp;</div>
+                    </div>
+                    <div style="line-height: 25px; font-size: 1px">&nbsp;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <%= render :partial => 'download_section' %>
+
+      <%= render :partial => 'simple_powerful' %>
+
+      <%= render :partial => 'dash_mount' %>
+
+      <%= render :partial => 'review' %>
+
+      <%= render :partial => 'app_contact' %>
+
+    </div>
+
+  </body>
+</html>

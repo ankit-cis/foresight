@@ -1,0 +1,27 @@
+<fieldset>
+  <div class="row">
+  
+    <div class="col-xs-6 col-md-6">
+      <%- if !f.object.license_code.nil? && f.object.license_code.length > 0 %>
+         <strong>App License:</strong><br/>
+         <%= f.object.license_code %>
+       <% else %>
+          <br>
+          <%= f.input :create_license, as: :boolean, label: " Assign application licence?" %>
+       <% end %>  
+    </div>
+    <div class="col-xs-6 col-md-6">
+      <br>
+      <%= f.input :is_company_admin %>
+    </div>
+    
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-md-6">
+      <%= f.input :start_date, include_blank: true %><br />
+    </div>
+    <div class="col-xs-6 col-md-6">
+      <%= f.input :end_date, include_blank: true %><br />
+    </div>    
+  </div>
+</fieldset>

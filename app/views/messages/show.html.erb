@@ -1,0 +1,29 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+  <li class="breadcrumb-item"><a href="/messages">Messages</a></li>
+  <li class="breadcrumb-item active"><%= @message.title %> (<%= @message.company.name %>)</li>
+  <div class="pull-right">
+    <%= link_to "Edit", edit_message_path(@message), class: "btn btn-primary btn-rounded btn-sm" %>
+  </div>
+</ol>
+
+<div class="row">
+  <div class="col-md-12">
+    
+    <div class="card">
+      <div class="card-header">
+        <%= @message.body %>
+        <div class="pull-right">
+          Expires: <%= @message.expires %>
+        </div>
+      </div>
+      <div class="card-block">
+        <%= @message.content.html_safe %>
+      </div>
+      <div class="card-footer text-center">
+        <%= link_to "Send Message", send_message_message_path(@message), class: "btn btn-primary btn-rounded btn-sm" %>
+      </div>
+      
+    </div>
+  </div>
+</div>

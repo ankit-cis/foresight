@@ -1,0 +1,60 @@
+<%= simple_form_for(company) do |f| %>
+  <% if company.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:</h2>
+
+      <ul>
+      <% company.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="card">
+        <div class="card-header">
+          Company Information
+          <%= f.submit "Save", class: "btn btn-primary btn-rounded btn-sm pull-right" %>
+        </div>
+        <div class="card-block">
+          <div class="row">
+            <div class="col-md-6">
+              <%= f.input :name %>
+              <%= f.association :company_type %>
+              <%= f.input :forename %>
+              <%= f.input :surname %>
+              <%= f.input :email %>
+              <%= f.input :telephone_number %>
+            </div>
+            <div class="col-md-6">
+              <%= f.input :address_1 %>
+              <%= f.input :address_2 %>
+              <%= f.input :town %>
+              <%= f.input :county %>
+              <%= f.input :postcode %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <%= f.association :payment_type %>
+            </div>
+            <%- if current_user.is_admin %>
+              <div class="col-md-6">
+                <%= f.association :free_period %>
+              </div>
+            <% end %>
+            <div class="col-md-6">
+              <%= f.input :app_licenses %>
+            </div>
+            <div class="col-md-6">
+              <%= f.input :notification_email %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

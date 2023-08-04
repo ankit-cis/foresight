@@ -1,0 +1,13 @@
+<%= simple_form_for(@setting) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :company, label: "Company" %>
+    <%= f.input :notification_email %>
+    <%= f.input :disable_user_emails %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

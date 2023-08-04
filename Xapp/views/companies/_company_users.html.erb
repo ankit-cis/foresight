@@ -1,0 +1,24 @@
+<div class="tab-pane fade" id="users" role="tabpanel">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Is Admin?</th>
+        <th>Licensed?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <% company_user = user.company_users.where(company_id: @company.id).first %>
+          <td><%= link_to user.display_name, user %></td>
+          <td><%= user.email %></td>
+          <td><span class="status"><%= company_user&.is_company_admin == true ? "Admin" : "" %></span></td>
+          <td><%= company_user&.license_code && company_user&.license_code&.length > 0 ? "Yes" : "" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+</div>

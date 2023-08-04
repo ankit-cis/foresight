@@ -1,0 +1,3 @@
+VideoMailer#new_video_uploaded
+
+Hi, find me in app/views/video_mailer/new_video_uploaded

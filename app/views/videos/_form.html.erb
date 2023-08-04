@@ -1,0 +1,16 @@
+<%= simple_form_for(@video) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :user %>
+    <%= f.association :company %>
+    <%= f.input :lat %>
+    <%= f.input :long %>
+    <%= f.association :accident %>
+    <%= f.input :incident_video %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

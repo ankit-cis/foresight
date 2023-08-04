@@ -1,0 +1,53 @@
+// Custom bootstrap variables must be set or imported *before* bootstrap.
+$brand-primary: rgba(210, 89, 26, 1.00);
+$brand-secondary: rgba(103, 186, 89, 1.00);;
+$brand-info: rgba(0, 133, 126, 1.00);
+
+// IBOX colors ( default panel colors)
+$border-color: #e7eaec;   // IBox border
+$ibox-title-bg: white;    // IBox Background header
+$ibox-content-bg: white;  // IBox Background content
+
+@import "bootstrap";
+@import "sidebar";
+@import "font-awesome";
+@import "backgrounds";
+@import "widgets";
+@import "fancybox/jquery.fancybox";
+@import "bootstrap-datepicker";
+
+.full {
+    background: image-url("bg.png") no-repeat right bottom fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+body { 
+    background-color: transparent;
+}
+
+.tab-pane {
+  background: white;
+  border: 0px solid RGBA(228, 228, 228, 1.00);
+  border-radius: 5px;
+}
+
+.tab-pad {
+    padding: 2rem;
+}
+
+.dashboard-item a {
+	color: inherit;
+	letter-spacing: 0.2rem;
+	text-decoration: none;
+}
+.dashboard-item a:hover {
+  letter-spacing: 0.3rem;
+}
+
+.passwordBox {
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 100px 20px 20px 20px;
+}

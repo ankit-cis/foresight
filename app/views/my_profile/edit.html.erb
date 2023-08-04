@@ -1,0 +1,7 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item"><%= @user.display_name %></li>
+  <li class="breadcrumb-item active">Edit</li>
+</ol>
+
+<%= render 'form', user: @user %>

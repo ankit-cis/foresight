@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Company Types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @company_types.each do |company_type| %>
+      <tr>
+        <td><%= company_type.name %></td>
+        <td><%= company_type.description %></td>
+        <td><%= link_to 'Show', company_type %></td>
+        <td><%= link_to 'Edit', edit_company_type_path(company_type) %></td>
+        <td><%= link_to 'Destroy', company_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Company Type', new_company_type_path %>

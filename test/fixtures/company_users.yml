@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company: one
+  user: one
+  is_company_admin: false
+  is_app_user: false
+  license_code: MyString
+
+two:
+  company: two
+  user: two
+  is_company_admin: false
+  is_app_user: false
+  license_code: MyString
