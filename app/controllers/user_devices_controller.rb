@@ -15,7 +15,7 @@ class UserDevicesController < ApplicationController
   def destroy
     @user_device.destroy
     respond_to do |format|
-      format.html { redirect_to user_devices_url, notice: 'User device was successfully destroyed.' }
+      format.html { redirect_to user_devices_url, notice: 'User device was successfully deleted.' }
       format.json { head :no_content }
     end
   end

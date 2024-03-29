@@ -67,7 +67,7 @@ class MessagesController < ApplicationController
   def destroy
     @message.destroy
     respond_to do |format|
-      format.html { redirect_to messages_url, notice: 'Message was successfully destroyed.' }
+      format.html { redirect_to messages_url, notice: 'Message was successfully deleted.' }
       format.json { head :no_content }
     end
   end

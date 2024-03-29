@@ -58,7 +58,7 @@ class ApiUsersController < ApplicationController
   def destroy
     @api_user.destroy
     respond_to do |format|
-      format.html { redirect_to api_users_url, notice: 'ApiUser was successfully destroyed.' }
+      format.html { redirect_to api_users_url, notice: 'ApiUser was successfully deleted.' }
       format.json { head :no_content }
     end
   end

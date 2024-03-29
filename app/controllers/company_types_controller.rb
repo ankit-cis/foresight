@@ -59,7 +59,7 @@ class CompanyTypesController < ApplicationController
   def destroy
     @company_type.destroy
     respond_to do |format|
-      format.html { redirect_to company_types_url, notice: 'Company type was successfully destroyed.' }
+      format.html { redirect_to company_types_url, notice: 'Company type was successfully deleted.' }
       format.json { head :no_content }
     end
   end

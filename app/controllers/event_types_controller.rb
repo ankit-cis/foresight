@@ -59,7 +59,7 @@ class EventTypesController < ApplicationController
   def destroy
     @event_type.destroy
     respond_to do |format|
-      format.html { redirect_to event_types_url, notice: 'Event type was successfully destroyed.' }
+      format.html { redirect_to event_types_url, notice: 'Event type was successfully deleted.' }
       format.json { head :no_content }
     end
   end

@@ -59,7 +59,7 @@ class FreePeriodsController < ApplicationController
   def destroy
     @free_period.destroy
     respond_to do |format|
-      format.html { redirect_to free_periods_url, notice: 'Free Period was successfully destroyed.' }
+      format.html { redirect_to free_periods_url, notice: 'Free Period was successfully deleted.' }
       format.json { head :no_content }
     end
   end

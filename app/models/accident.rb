@@ -1,12 +1,12 @@
 class Accident < ApplicationRecord
   belongs_to :user
   belongs_to :company
-  belongs_to :video
   belongs_to :status
-
-  has_many :vehicles, inverse_of: :accident
-  has_many :photos, inverse_of: :accident
-  has_many :witnesses, inverse_of: :accident
+  
+  has_one :video, dependent: :destroy
+  has_many :vehicles, inverse_of: :accident, dependent: :destroy
+  has_many :photos, inverse_of: :accident, dependent: :destroy
+  has_many :witnesses, inverse_of: :accident, dependent: :destroy
   
   accepts_nested_attributes_for :vehicles, :allow_destroy => true
   accepts_nested_attributes_for :photos, :allow_destroy => true

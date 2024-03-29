@@ -12,8 +12,8 @@ class Video < ApplicationRecord
   belongs_to :status
   belongs_to :user_device
 
-  has_many :speeds
-  has_many :gforces
+  has_many :speeds, dependent: :destroy
+  has_many :gforces, dependent: :destroy
   
   accepts_nested_attributes_for :speeds
   accepts_nested_attributes_for :gforces

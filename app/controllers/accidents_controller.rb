@@ -85,7 +85,7 @@ class AccidentsController < ApplicationController
   def destroy
     @accident.destroy
     respond_to do |format|
-      format.html { redirect_to accidents_url, notice: 'Accident was successfully destroyed.' }
+      format.html { redirect_to accidents_url, notice: 'Accident was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -98,6 +98,6 @@ class AccidentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def accident_params
-      params.require(:accident).permit(:user_id, :company_id, :lat, :long, :video_id, :status_id)
+      params.require(:accident).permit(:user_id, :company_id, :lat, :long, :status_id)
     end
 end
