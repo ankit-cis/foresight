@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
 
   def index
-
     if params[:q]
       q_parames = params[:q]
 
@@ -85,21 +84,23 @@ class UsersController < ApplicationController
   end
 
   def create
-
     @user = User.new(user_params)
     @user.email = @user.email.downcase
     
-    if !current_user.is_admin?
+    unless current_user.is_admin?
       @user.company = current_company
+    else
+      @user.is_admin = true
     end
 
-    password = SecureRandom.urlsafe_base64(8)
-    @user.password = password
-    @user.password_confirmation = password
+    unless @user.password.present?
+      password = SecureRandom.urlsafe_base64(8)
+      @user.password = password
+    end
+    @user.password_confirmation = @user.password
 
     respond_to do |format|
       if @user.save
-        
         settings = Setting.first
         if settings.disable_user_emails != true
           UserMailer.signup_confirmation(@user.id, password).deliver_later
@@ -115,10 +116,9 @@ class UsersController < ApplicationController
   end
 
   def update
+    updated_user_params = user_params[:password].present? ? user_params : user_params.except(:password)
     respond_to do |format|
-      
-      if @user.update(user_params)
-        
+      if @user.update(updated_user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -234,7 +234,7 @@ class UsersController < ApplicationController
 
     def user_params
       if current_user.is_admin?
-        params.require(:user).permit(:email, :password_digest, :forename, :surname, :title_id, :address, :vehicle_registration, :insurer, :telephone_number, :is_admin, :company_id, :promo_code, :call_on_false_alarm, { company_users_attributes: [:id, :create_license, :is_company_admin, :start_date, :end_date]})
+        params.require(:user).permit(:email, :password, :forename, :surname, :title_id, :address, :vehicle_registration, :insurer, :telephone_number, :is_admin, :company_id, :promo_code, :call_on_false_alarm, { company_users_attributes: [:id, :create_license, :is_company_admin, :start_date, :end_date]})
       else
         params.require(:user).permit(:email, :password_digest, :forename, :surname, :title_id, :address, :vehicle_registration, :insurer, :telephone_number, :call_on_false_alarm)
       end

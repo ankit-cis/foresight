@@ -8,14 +8,14 @@ class User < ApplicationRecord
   belongs_to :company
   belongs_to :unscoped_company, -> { unscoped }, foreign_key: :company_id, class_name: "Company"
   
-  has_many :company_users
+  has_many :company_users, dependent: :destroy
   has_many :companies, through: :company_users
   
-  has_many :videos
-  has_many :accidents
+  has_many :videos, dependent: :destroy
+  has_many :accidents, dependent: :destroy
     
-  has_many :user_devices
-  has_many :user_events
+  has_many :user_devices, dependent: :destroy
+  has_many :user_events, dependent: :destroy
   
   validates_presence_of :company, :on => :create, :message => "can't be blank"  
   

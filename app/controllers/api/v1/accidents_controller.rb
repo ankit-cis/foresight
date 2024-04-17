@@ -5,7 +5,7 @@ module Api
       before_action :set_accident, only: [:update]
       
       def create
-        @accident = current_user.accidents.build(accident_params)
+        @accident = current_user.accidents.build(accident_params.except(:video_id))
         
         @accident.user = current_user
         
@@ -19,7 +19,7 @@ module Api
         end
         
         if @accident.save
-          video = Video.find(@accident.video_id)
+          video = Video.find(accident_params[:video_id])
           video.accident = @accident
           video.company =  @accident.company
           video.save!
