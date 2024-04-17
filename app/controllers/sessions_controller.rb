@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       if session[:redirect_back_to]
         redirect = session[:redirect_back_to]
         session[:redirect_back_to] = nil
-        redirect_to redirect
+        redirect_to root_url
       else      
         redirect_to root_url
       end
