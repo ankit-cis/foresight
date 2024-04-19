@@ -4,6 +4,6 @@ FactoryGirl.define do
     registration_number "MyString"
     driver_name "MyString"
     insurance_company "MyString"
-    insurance_policy_number "MyString"
+    phone_number "9876543210"
   end
 end
