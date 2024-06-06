@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     if current_user.is_admin
       @initial_search = User.where.not(id: ["b57cb701-1a37-4ddc-89a8-8703b37f9b16", "812fd5f6-14a8-40d9-af03-48578850bda6"])
     else
-      @initial_search = User.where.not(id: ["b57cb701-1a37-4ddc-89a8-8703b37f9b16", "812fd5f6-14a8-40d9-af03-48578850bda6"]).company_secure
+      @initial_search = User.where.not(id: ["b57cb701-1a37-4ddc-89a8-8703b37f9b16", "812fd5f6-14a8-40d9-af03-48578850bda6"]).where(company_id: current_company.id)
     end
 
     if has_iap && (has_iap == 1 || has_iap == "1")
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
     unless current_user.is_admin?
       @user.company = current_company
     else
-      @user.is_admin = true
+      @user.is_admin = false
     end
 
     unless @user.password.present?
@@ -235,6 +235,8 @@ class UsersController < ApplicationController
     def user_params
       if current_user.is_admin?
         params.require(:user).permit(:email, :password, :forename, :surname, :title_id, :address, :vehicle_registration, :insurer, :telephone_number, :is_admin, :company_id, :promo_code, :call_on_false_alarm, { company_users_attributes: [:id, :create_license, :is_company_admin, :start_date, :end_date]})
+      elsif is_company_admin? == true
+        params.require(:user).permit(:email, :password_digest, :forename, :surname, :title_id, :address, :vehicle_registration, :insurer, :telephone_number, :call_on_false_alarm, { company_users_attributes: [:id, :create_license, :is_company_admin, :start_date, :end_date]})
       else
         params.require(:user).permit(:email, :password_digest, :forename, :surname, :title_id, :address, :vehicle_registration, :insurer, :telephone_number, :call_on_false_alarm)
       end
