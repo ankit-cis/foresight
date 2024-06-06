@@ -39,7 +39,6 @@ class User < ApplicationRecord
   
   def check_company_users
     company_users.each do |company_user|
-      
       if company_user.create_license && (company_user.create_license == true || company_user.create_license == 1 || company_user.create_license == "1")
         company_user.license_code = SecureRandom.uuid
       end
@@ -81,7 +80,7 @@ class User < ApplicationRecord
   end
   
   def is_company_admin?(company)
-    self.company_users.where(company_id: company.id).first.is_company_admin
+    self.company_users.where(company_id: company.id).first
   end
   
 

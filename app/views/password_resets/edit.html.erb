@@ -1,7 +1,11 @@
 <div class="col-lg-4 offset-lg-4">
   <div class="card m-t-3">
     <div class="card-header text-center">
+    <% if params[:edit_action].present? %>
+      <h3>Set Password</h3>
+    <% else %>
       <h3>Password Reset</h3>
+    <% end %>
       <p><%= @user.display_name %>, please enter and confirm a new password.</p>
     </div>
     <div class="card-block">
@@ -20,9 +24,11 @@
           <%= simple_form_for @user, :url => password_reset_path(params[:id]) do |f| %>
             <%= f.input :password %>
             <%= f.input :password_confirmation %>
-
-            <%= f.submit "Update Password", class: "btn btn-primary block full-width m-b" %>
-      
+            <% if params[:edit_action].present? %>
+                <%= f.submit "Set Password", class: "btn btn-primary block full-width m-b" %>
+              <% else %>
+                <%= f.submit "Update Password", class: "btn btn-primary block full-width m-b" %>
+              <% end %>      
           <% end %>
         </div>
       </div>
