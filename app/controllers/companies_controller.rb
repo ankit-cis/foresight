@@ -15,7 +15,11 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   # GET /companies/1.json
   def show
-    @users = User.company_secure.where(company_id: @company.id)
+    if params[:id]
+      @users = User.where(company_id: params[:id])
+    else
+      @users = User.company_secure.where(company_id: @company.id)
+    end
   end
 
   # GET /companies/new
