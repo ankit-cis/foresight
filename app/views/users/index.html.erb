@@ -42,11 +42,16 @@
         <% end %>
 
         <td><%= user.address %></td>
-        <%- company_user = user.company_users.find_by_company_id(user.company_id) %>
+        <% company_users = user.company_users.where(company_id: user.company_id) %>
         <td>
-          <%= !company_user.nil? && !company_user.license_code.nil? && company_user.license_code.length > 0 ? '<span class="btn btn-primary btn-rounded btn-sm">Licensed</span>'.html_safe : "" %>
+          <% company_users = user.company_users.where(company_id: user.company_id) %>
+          <% if company_users.any? { |company_user| company_user.license_code.present? && company_user.license_code.length > 0 } %>
+            <span class="btn btn-primary btn-rounded btn-sm">Licensed</span>
+          <% end %>
           <%= user.has_iap? ? '<span class="btn btn-primary btn-rounded btn-sm">IAP</span>'.html_safe : "" %>
-          <%= !user.is_admin && !company_user.nil? && company_user.is_company_admin ? '<span class="btn btn-info btn-rounded btn-sm">Admin</span>'.html_safe : "" %>
+          <% if !user.is_admin && company_users.any? { |company_user| company_user.is_company_admin } %>
+            <span class="btn btn-info btn-rounded btn-sm">Admin</span>
+          <% end %>
           <%= user.is_admin ? '<span class="btn btn-danger btn-rounded btn-sm">Super User</span>'.html_safe : "" %>
           <%= user.call_on_false_alarm ? '<span class="btn btn-info btn-rounded btn-sm">Always Call</span>'.html_safe : "" %>
           
