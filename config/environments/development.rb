@@ -31,15 +31,14 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.perform_deliveries = true
+  config.web_console.whitelisted_ips = '195.191.164.168'
+  config.action_mailer.delivery_method = :sendmail
   config.action_mailer.smtp_settings = {
-    :address => 'email-smtp.eu-west-1.amazonaws.com',
-    :port => 587,
-    :user_name => 'AKIAIQARV5HKJDXVGZBA',
-    :password => 'AjIWmtlyAj/chSXDvL14mZqJRBsmKo1URYE/76SCAA/B',
-    :authentication => :login,
-    :enable_starttls_auto => true
+    address: '195.191.164.168',
+    port: 25,
+    domain: 'digitalflair.co.uk'
   }
-  config.action_mailer.default_url_options = { :host => "foursightplus-rails.test" }
+  config.action_mailer.default_url_options = { :host => "svr02.digitalflair.co.uk" }
   
   config.action_mailer.perform_caching = false
 
