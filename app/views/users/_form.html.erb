@@ -2,26 +2,21 @@
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
       <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
-
   <div class="row">
     <div class="col-md-6">
-
       <div class="card">
         <div class="card-header">
           <strong>User Information</strong>
           <%= f.submit "Save", class: "btn btn-primary btn-rounded btn-sm pull-right" %>
-          
         </div>
         <div class="card-block">
-
           <%- if current_user && current_user.is_admin %>
             <div class="row">
               <div class="col-xs-6 col-md-6">
@@ -33,23 +28,20 @@
             <div class="col-xs-6 col-md-6">
               <%= f.input :email %>
             </div>
-	    <div class="col-xs-6 col-md-6">
-	      <%= f.input :password %>
+            <div class="col-xs-6 col-md-6">
+              <%= f.input :password %>
             </div>
-
             <div class="col-xs-6 col-md-6">
               <%= f.input :forename %>
             </div>
-
             <div class="col-xs-6 col-md-6">
               <%= f.input :surname %>
             </div>
-
-            <div class="col-xs-6 col-md-6">            
+            <div class="col-xs-6 col-md-6">
               <%= f.association :title %>
             </div>
-            <%- if current_user.is_admin || current_user.company_users.find_by_company_id(current_user.company_id).is_company_admin %>        <% company_user = @user.company_users.find_by_company_id(@user.company_id) %>
-             
+            <%- if current_user.is_admin || current_user.company_users.find_by_company_id(current_user.company_id).is_company_admin %>
+              <% company_user = @user.company_users.find_by_company_id(@user.company_id) %>
               <div class="col-xs-6 col-md-6">
                 <%- if current_user.is_admin %>
                   <%= f.input :promo_code %>
@@ -59,7 +51,7 @@
                 <% end %>
               </div>
               <div class="col-xs-6 col-md-6">
-                  <%= f.input :call_on_false_alarm, as: :boolean, label: " Call on false alarm?" %>
+                <%= f.input :call_on_false_alarm, as: :boolean, label: " Call on false alarm?" %>
               </div>
             <% end %>
           </div>
@@ -67,12 +59,10 @@
       </div>
     </div>
     <div class="col-md-6">
-
       <div class="card">
         <div class="card-header">
           <strong>License Details</strong>
           <%= f.submit "Save", class: "btn btn-primary btn-rounded btn-sm pull-right" %>
-          
         </div>
         <div class="card-block">
           <%= f.fields_for :company_users do |builder| %>
@@ -83,32 +73,24 @@
     </div>
   </div>
   <div class="row">
-
     <div class="col-md-6">
-
       <div class="card">
         <div class="card-header">
           <strong>Profile Details</strong>
           <%= f.submit "Save", class: "btn btn-primary btn-rounded btn-sm pull-right" %>
-          
         </div>
         <div class="card-block">
-
           <div class="row">
-
-            <div class="col-xs-6 col-md-6">            
+            <div class="col-xs-6 col-md-6">
               <%= f.input :address %>
             </div>
-
             <div class="col-xs-6 col-md-6">
               <%= f.input :vehicle_registration %>
             </div>
-
-            <div class="col-xs-6 col-md-6">            
+            <div class="col-xs-6 col-md-6">
               <%= f.input :insurer %>
             </div>
-
-            <div class="col-xs-6 col-md-6">            
+            <div class="col-xs-6 col-md-6">
               <%= f.input :telephone_number %>
             </div>
           </div>

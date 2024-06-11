@@ -103,7 +103,7 @@ class UsersController < ApplicationController
       if @user.save
         settings = Setting.first
         if settings.disable_user_emails != true
-          UserMailer.signup_confirmation(@user.id, password).deliver_later
+          UserMailer.signup_confirmation(@user.id, password).deliver_now
         end
         
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -160,7 +160,6 @@ class UsersController < ApplicationController
           existing_user = User.where(email: row["email"]).first
           if existing_user            
             existing_user.company_id = company.id
-
             existing_user.save!
         
             company_user = CompanyUser.new
@@ -169,6 +168,11 @@ class UsersController < ApplicationController
             company_user.is_app_user = true
             company_user.is_company_admin = false
             company_user.save!
+            if row["duration"].present?
+              existing_user.company_users.each do |license|
+                CompanyUser.find_by(id: license.id).update(license_code: SecureRandom.uuid, start_date: Date.today.strftime("%Y-%m-%d"), end_date: Date.today.next_year(row["duration"].to_i).strftime("%Y-%m-%d"))
+              end
+            end
           else
             user = User.new
             user.email = row["email"]
@@ -184,12 +188,21 @@ class UsersController < ApplicationController
             user.password = password
             user.password_confirmation = password
             user.save!
-        
+            settings = Setting.first
+            if settings.disable_user_emails != true
+              UserMailer.signup_confirmation(user.id, password).deliver_now
+            end
+
             company_user = CompanyUser.new
             company_user.user_id = user.id
             company_user.company_id = user.company_id
             company_user.is_app_user = true
             company_user.is_company_admin = false
+            if row["duration"].present?
+              company_user.license_code =  SecureRandom.uuid
+              company_user.start_date = Date.today.strftime("%Y-%m-%d")
+              company_user.end_date = Date.today.next_year(row["duration"].to_i).strftime("%Y-%m-%d")
+            end
             company_user.save!
           end
         end
@@ -205,7 +218,7 @@ class UsersController < ApplicationController
     @user.password = password
     @user.password_confirmation = password
     if @user.save
-      UserMailer.signup_confirmation(@user.id, password).deliver_later
+      UserMailer.signup_confirmation(@user.id, password).deliver_now
       redirect_to @user, notice: 'Welcome email resent.'
     else
       render :show
