@@ -80,7 +80,7 @@ class User < ApplicationRecord
   end
   
   def is_company_admin?(company)
-    self.company_users.where(company_id: company.id).first
+    self.company_users.where(company_id: company.id).first.is_company_admin?
   end
   
 
