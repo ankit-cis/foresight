@@ -36,7 +36,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: '195.191.164.168',
     port: 25,
-    domain: 'digitalflair.co.uk'
+    domain: 'svr02.digitalflair.co.uk'
   }
   config.action_mailer.default_url_options = { :host => "svr02.digitalflair.co.uk" }
   

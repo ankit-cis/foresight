@@ -22,10 +22,10 @@
 
         <ul class="nav nav-tabs card-header-tabs pull-xs-left" id="company-navigation">
           <li class="nav-item">
-              <a class="nav-link active" href="#details" data-toggle="tab">Details</a>
+              <a class="nav-link <%= params[:tab] == 'users' ? '' : 'active' %>" href="#details" data-toggle="tab">Details</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="#users" data-toggle="tab">Users</a>
+              <a class="nav-link <%= params[:tab] == 'users' ? 'active' : '' %>" href="#users" data-toggle="tab">Users</a>
           </li>
         </ul>
       </div>

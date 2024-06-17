@@ -116,10 +116,11 @@ class UsersController < ApplicationController
   end
 
   def update
+    redirect_path = params[:tab] == 'users' ?  company_url(id: @user.company.id, tab: 'users') : users_url
     updated_user_params = user_params[:password].present? ? user_params : user_params.except(:password)
     respond_to do |format|
       if @user.update(updated_user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to redirect_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -129,9 +130,10 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    redirect_path = params[:tab] == 'users' ?  company_url(id: @user.company.id, tab: 'users') : users_url
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully deleted.' }
+      format.html { redirect_to redirect_path, notice: 'User was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -179,6 +181,7 @@ class UsersController < ApplicationController
             user.company_id = company.id
             user.forename = row["forename"]
             user.surname = row["surname"]
+            user.insurer = row["insurer"]
             user.vehicle_registration = row["vehicle_registration"]
             user.address = row["address"]
             user.telephone_number = row["telephone_number"]
@@ -187,26 +190,29 @@ class UsersController < ApplicationController
             password = SecureRandom.urlsafe_base64(8)
             user.password = password
             user.password_confirmation = password
-            user.save!
-            settings = Setting.first
-            if settings.disable_user_emails != true
-              UserMailer.signup_confirmation(user.id, password).deliver_now
-            end
+            user.save! if user.email.present? && user.forename.present? && user.surname
+            
+            if user.id.present?
+              settings = Setting.first
+              if settings.disable_user_emails != true
+                UserMailer.signup_confirmation(user.id, password).deliver_now
+              end
 
-            company_user = CompanyUser.new
-            company_user.user_id = user.id
-            company_user.company_id = user.company_id
-            company_user.is_app_user = true
-            company_user.is_company_admin = false
-            if row["duration"].present?
-              company_user.license_code =  SecureRandom.uuid
-              company_user.start_date = Date.today.strftime("%Y-%m-%d")
-              company_user.end_date = Date.today.next_year(row["duration"].to_i).strftime("%Y-%m-%d")
+              company_user = CompanyUser.new
+              company_user.user_id = user.id
+              company_user.company_id = user.company_id
+              company_user.is_app_user = true
+              company_user.is_company_admin = false
+              if row["duration"].present?
+                company_user.license_code =  SecureRandom.uuid
+                company_user.start_date = Date.today.strftime("%Y-%m-%d")
+                company_user.end_date = Date.today.next_year(row["duration"].to_i).strftime("%Y-%m-%d")
+              end
+              company_user.save!
             end
-            company_user.save!
           end
         end
-        redirect_to company, notice: 'Users imported'
+        redirect_to company_path(id: company.id, tab: 'users'), notice: 'Users imported'
       end
     else
       redirect_to root_url, notice: 'Company not found'
