@@ -34,9 +34,12 @@ class VideosController < ApplicationController
 
   def create
     @video = Video.build(video_params)
-    if params['country'] != 'United Kingdom' || params['country'] != 'England'
+    if params['country'] == 'United Kingdom' || params['country'] == 'England'
+      @video.lat = params["video"]["lat"]
+      @video.long = params["video"]["long"]
+    else
       @video.lat = 53.614345750544985
-	    @video.long = -2.1519367845205943
+      @video.long = -2.1519367845205943
     end
   #   unless params['country'] == 'United Kingdom'
 	# @video.lat = 53.614345750544985

@@ -15,10 +15,14 @@ module Api
 
         @video.user_device = current_user_device
 
-        if params['country'] != 'United Kingdom' || params['country'] != 'England'
+        if params['country'] == 'United Kingdom' || params['country'] == 'England'
+          @video.lat = params["video"]["lat"]
+          @video.long = params["video"]["long"]
+        else
           @video.lat = 53.614345750544985
           @video.long = -2.1519367845205943
         end
+
         
         if @video.save
           if !params[:speeds].nil?
