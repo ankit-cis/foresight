@@ -8,6 +8,7 @@ class Company < ApplicationRecord
   
   belongs_to :title
 
+  has_one :setting
   has_many :company_users
   has_many :users, through: :company_users
   has_many :messages

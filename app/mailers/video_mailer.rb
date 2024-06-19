@@ -8,7 +8,7 @@ class VideoMailer < ApplicationMailer
   def new_video_uploaded(video_id)
     @video = Video.unscoped.find(video_id)
 
-    settings = Setting.first
+    settings = @video.company.setting
     mail(to: [settings.notification_email, @video.company.notification_email], subject: '4Sight: A new video has been reported.')
   end
 end

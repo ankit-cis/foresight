@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
-
+  get '/fetch_company_setting_values' => 'settings#fetch_company_setting_values'
   resources :password_resets
 
   resources :users do

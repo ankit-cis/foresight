@@ -1,13 +1,32 @@
-<%= simple_form_for(@setting) do |f| %>
+<%= simple_form_for(@setting, remote: true) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :company, label: "Company" %>
-    <%= f.input :notification_email %>
-    <%= f.input :disable_user_emails %>
+    <%= f.association :company, label: "Company", input_html: { id: "company-dropdown" } %>
+    <%= f.input :notification_email, input_html: { id: 'notification_email' } %>
+    <%= f.input :disable_user_emails, input_html: { id: 'disable_user_emails' } %>
   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+
+<script>
+  $(document).on('click', '#company-dropdown', function() {
+    var selectedCompanyId = $(this).val();
+    $.ajax({
+      url: '/fetch_company_setting_values',
+      type: 'GET',
+      dataType: 'json',
+      data: { company_id: selectedCompanyId },
+      success: function(response) {
+        $('#notification_email').val(response['setting']['notification_email']);
+        $('#disable_user_emails').prop('checked', response['setting']['disable_user_emails'])
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  })
+</script>

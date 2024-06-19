@@ -101,7 +101,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        settings = Setting.first
+        settings = @user.company.setting
         if settings.disable_user_emails != true
           UserMailer.signup_confirmation(@user.id, password).deliver_now
         end
@@ -193,7 +193,7 @@ class UsersController < ApplicationController
             user.save! if user.email.present? && user.forename.present? && user.surname
             
             if user.id.present?
-              settings = Setting.first
+              settings = user.company.setting
               if settings.disable_user_emails != true
                 UserMailer.signup_confirmation(user.id, password).deliver_now
               end
