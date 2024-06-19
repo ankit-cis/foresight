@@ -13,9 +13,9 @@ module Api
 
         @accident.company = current_user.company
 
-        unless ['United Kingdom', 'England'].include?(params['country'])
-          @accident.lat = 53.614345750544985
-          @accident.long = -2.1519367845205943
+        if params['country'] != 'United Kingdom' || params['country'] != 'England'
+          @video.lat = 53.614345750544985
+          @video.long = -2.1519367845205943
         end
 
         if @accident.save
