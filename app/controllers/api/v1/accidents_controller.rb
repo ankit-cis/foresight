@@ -13,10 +13,10 @@ module Api
 
         @accident.company = current_user.company
 
-        unless ['United Kingdom', 'England'].include?(params['country'])
-          @accident.lat = 53.614345750544985
-          @accident.long = -2.1519367845205943
-        end
+        # unless ['United Kingdom', 'England'].include?(params['country'])
+        #   @accident.lat = 53.614345750544985
+        #   @accident.long = -2.1519367845205943
+        # end
 
         if @accident.save
           video = Video.find(accident_params[:video_id])

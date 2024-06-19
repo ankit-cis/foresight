@@ -34,10 +34,10 @@ class VideosController < ApplicationController
 
   def create
     @video = Video.build(video_params)
-    unless ['United Kingdom', 'England'].include?(params['country'])
-      @video.lat = 53.614345750544985
-      @video.long = -2.1519367845205943
-    end
+    # unless ['United Kingdom', 'England'].include?(params['country'])
+    #   @video.lat = 53.614345750544985
+    #   @video.long = -2.1519367845205943
+    # end
     respond_to do |format|
       if @video.save
         format.html { redirect_to @video, notice: 'Video was successfully created.' }
