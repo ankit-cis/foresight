@@ -13,7 +13,7 @@ module Api
 
         @accident.company = current_user.company
 
-        if !(params["country"] == "United Kingdom" || params["country"] == "England")
+        if !(params["accident"]["country"] == "United Kingdom" || params["accident"]["country"] == "England")
           @accident.lat = 53.614345750544985
           @accident.long = -2.1519367845205943
         end
