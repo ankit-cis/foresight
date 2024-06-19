@@ -14,8 +14,8 @@ module Api
         @accident.company = current_user.company
 
         if params['country'] == 'United Kingdom' || params['country'] == 'England'
-          @video.lat = params["video"]["lat"]
-          @video.long = params["video"]["long"]
+          @video.lat = params["accident"]["lat"]
+          @video.long = params["accident"]["long"]
         else
           @video.lat = 53.614345750544985
           @video.long = -2.1519367845205943
