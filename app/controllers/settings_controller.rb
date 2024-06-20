@@ -1,7 +1,8 @@
 class SettingsController < ApplicationController
   before_action :authorize
   before_action :admin_required
-  before_action :set_setting, only: [:index, :show, :edit, :update, :destroy, :reset_all_passwords]
+  before_action :set_setting, only: [:index, :show, :edit, :destroy, :reset_all_passwords]
+  before_action :set_company, only: [:update]
   
   # GET /settings
   # GET /settings.json
@@ -43,8 +44,14 @@ class SettingsController < ApplicationController
   # PATCH/PUT /settings/1
   # PATCH/PUT /settings/1.json
   def update
+    if @company.setting.nil?
+      @setting = Setting.new(setting_params)
+    else
+      @company.setting.update(setting_params)
+      @setting = @company.setting
+    end
     respond_to do |format|
-      if @setting.update(setting_params)
+      if @setting.save
         format.html { redirect_to @setting, notice: 'Setting was successfully updated.' }
         format.json { render :show, status: :ok, location: @setting }
       else
@@ -76,15 +83,26 @@ class SettingsController < ApplicationController
     
     redirect_to @setting, notice: 'All passwords being reset.'
   end
+
+  def fetch_company_setting_values
+    setting = Setting.find_by(company_id: params[:company_id]).presence || Setting.new
+    respond_to do |format|
+      format.json { render json: { setting: setting } }
+    end
+  end
   
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_setting
-      @setting = Setting.first
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def setting_params
-      params.require(:setting).permit(:company_id, :notification_email, :disable_user_emails)
-    end
+  def set_company
+    @company = Company.find(setting_params['company_id'])
+  end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_setting
+    @setting = Setting.first
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def setting_params
+    params.require(:setting).permit(:company_id, :notification_email, :disable_user_emails)
+  end
 end

@@ -65,7 +65,7 @@ class CompaniesController < ApplicationController
         company_user.license_code = SecureRandom.uuid
         company_user.save!
         
-        settings = Setting.first
+        settings = Setting.create(company_id: @company.id, disable_user_emails: false)
         if settings.disable_user_emails != true
           UserMailer.signup_confirmation(user.id, password).deliver_now
         end
