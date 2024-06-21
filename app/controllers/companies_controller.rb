@@ -110,7 +110,7 @@ class CompaniesController < ApplicationController
     end
   end
 
-  def download_subdomain_physicians
+  def download_user_error_csv
     if params[:file_name].include?('import_errors')
       file_path = Rails.root.join('tmp', params[:file_name])
 

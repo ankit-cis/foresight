@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       get :subtitles
     end
   end
-    
+  get 'download_user_error_csv', to: 'companies#download_user_error_csv'
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get '/fetch_company_setting_values' => 'settings#fetch_company_setting_values'
