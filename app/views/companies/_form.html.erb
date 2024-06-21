@@ -50,7 +50,12 @@
               <%= f.input :app_licenses %>
             </div>
             <div class="col-md-6">
-              <%= f.input :notification_email %>
+              <%= label_tag :notification_email, 'Notification Email address' %>
+              <%= text_field_tag :notification_email, company&.setting&.notification_email || params[:notification_email], class:"form-control select required",required: true %>
+            </div>
+            <div class="col-md-6">
+              <%= label_tag :accept_terms, 'Disable user email' %>
+              <%= check_box_tag :accept_terms, user_email_disabled?(company, params[:accept_terms]), input_html: { id: "accept_terms" } %>
             </div>
           </div>
         </div>
@@ -58,3 +63,12 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  var accept_term = $("#accept_terms").val();
+  if (accept_term == "0") {
+    $("#accept_terms").prop('checked', true);
+  } else {
+    $("#accept_terms").prop('checked', false);
+  }
+</script>
