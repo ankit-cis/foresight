@@ -20,6 +20,7 @@ class CompaniesController < ApplicationController
     else
       @users = User.company_secure.where(company_id: @company.id)
     end
+    @file_name = params[:file_name].present? ? params[:file_name] : ''
   end
 
   # GET /companies/new
@@ -106,6 +107,18 @@ class CompaniesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to companies_url, notice: 'Company was successfully deleted.' }
       format.json { head :no_content }
+    end
+  end
+
+  def download_subdomain_physicians
+    if params[:file_name].include?('import_errors')
+      file_path = Rails.root.join('tmp', params[:file_name])
+
+      if File.exist?(file_path)
+        send_file file_path, type: 'text/csv', disposition: 'attachment', filename: 'subdomainPhysicians.csv'
+      else
+        render plain: "File not found", status: 404
+      end
     end
   end
 

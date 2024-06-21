@@ -49,7 +49,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
 		
-  					<%= form_tag import_company_users_path(@company), multipart: true do %>
+  					<%= form_tag import_company_users_path(@company), multipart: true, html: { id: 'import_form' } do %>
               <div class="modal-body">
               
       						<%= file_field_tag :file %>
@@ -57,10 +57,26 @@
               </div>
 
               <div class="modal-footer">
-                <%= submit_tag "Import", class: "btn btn-primary" %>
+                <%= submit_tag "Import", class: "btn btn-primary", target: '_blank', 'data-no-turbolink' => true %>
                   <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
               </div>
   					<% end %>
         </div>
     </div>
 </div>
+
+<%= hidden_field_tag 'file_name', @file_name, id: 'file_name' %>
+
+<script>
+  $(document).ready(function() {
+    if ($('#file_name').val() != "") {
+      var file_name = $('#file_name').val();
+      console.log(file_name)
+      var urlWithFileName = new URL(window.location.href)
+      var previous_url = urlWithFileName.origin + urlWithFileName.pathname 
+      
+      var url = 'http://192.168.2.189:3000/download_subdomain_physicians?file_name='+file_name
+      window.location.href = url;
+    }
+  })
+</script>

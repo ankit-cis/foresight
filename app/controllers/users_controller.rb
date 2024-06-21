@@ -146,76 +146,112 @@ class UsersController < ApplicationController
   end
   
   def import
-      
     if current_user.is_admin
       company = Company.find(params[:company_id])
     else
       company = current_user.companies.find(params[:company_id])
     end
-    if company != nil
 
+    if company.present?
       file = params[:file]
-      if file == nil
-        redirect_to company, error: 'File not supplied'
+      if file.nil?
+        redirect_to company_path(company), alert: 'File not supplied'
       else
+        error_rows = []
+
         CSV.foreach(file.path, headers: true) do |row|
-          existing_user = User.where(email: row["email"]).first
-          if existing_user            
-            existing_user.company_id = company.id
-            existing_user.save!
-        
-            company_user = CompanyUser.new
-            company_user.user_id = existing_user.id
-            company_user.company_id = existing_user.company_id
-            company_user.is_app_user = true
-            company_user.is_company_admin = false
-            company_user.save!
-            if row["duration"].present?
-              existing_user.company_users.each do |license|
-                CompanyUser.find_by(id: license.id).update(license_code: SecureRandom.uuid, start_date: Date.today.strftime("%Y-%m-%d"), end_date: Date.today.next_year(row["duration"].to_i).strftime("%Y-%m-%d"))
+          existing_user = User.find_by(email: row["email"])
+          if existing_user
+            existing_user.update(company_id: company.id)
+            
+            company_user = CompanyUser.new(
+              user_id: existing_user.id,
+              company_id: existing_user.company_id,
+              is_app_user: true,
+              is_company_admin: false
+            )
+
+            unless company_user.save
+              if row["duration"].present?
+                existing_user.company_users.each do |license|
+                  license.update(
+                    license_code: SecureRandom.uuid,
+                    start_date: Date.today,
+                    end_date: Date.today.next_year(row["duration"].to_i)
+                  )
+                end
               end
             end
           else
-            user = User.new
-            user.email = row["email"]
-            user.company_id = company.id
-            user.forename = row["forename"]
-            user.surname = row["surname"]
-            user.insurer = row["insurer"]
-            user.vehicle_registration = row["vehicle_registration"]
-            user.address = row["address"]
-            user.telephone_number = row["telephone_number"]
-            user.is_admin = false
-          
-            password = SecureRandom.urlsafe_base64(8)
-            user.password = password
-            user.password_confirmation = password
-            user.save! if user.email.present? && user.forename.present? && user.surname
-            
-            if user.id.present?
-              settings = user.company.setting
-              if settings.disable_user_emails != true
-                UserMailer.signup_confirmation(user.id, password).deliver_now
-              end
+            user = User.new(
+              email: row["email"],
+              company_id: company.id,
+              forename: row["forename"],
+              surname: row["surname"],
+              insurer: row["insurer"],
+              vehicle_registration: row["vehicle_registration"],
+              address: row["address"],
+              telephone_number: row["telephone_number"],
+              is_admin: false,
+              password: SecureRandom.urlsafe_base64(8)
+            )
 
-              company_user = CompanyUser.new
-              company_user.user_id = user.id
-              company_user.company_id = user.company_id
-              company_user.is_app_user = true
-              company_user.is_company_admin = false
-              if row["duration"].present?
-                company_user.license_code =  SecureRandom.uuid
-                company_user.start_date = Date.today.strftime("%Y-%m-%d")
-                company_user.end_date = Date.today.next_year(row["duration"].to_i).strftime("%Y-%m-%d")
-              end
+            unless user.save
+              error_rows << [
+                row["email"],
+                row["forename"],
+                row["surname"],
+                row["insurer"],
+                row["vehicle_registration"],
+                row["address"],
+                row["telephone_number"],
+                user.errors.full_messages.join(", ")
+              ]
+            end
+
+            if user.persisted?
+              settings = user.company.setting
+              UserMailer.signup_confirmation(user.id, user.password).deliver_now unless settings.disable_user_emails
+
+              company_user = CompanyUser.new(
+                user_id: user.id,
+                company_id: user.company_id,
+                is_app_user: true,
+                is_company_admin: false,
+                license_code: row["duration"].present? ? SecureRandom.uuid : nil,
+                start_date: row["duration"].present? ? Date.today : nil,
+                end_date: row["duration"].present? ? Date.today.next_year(row["duration"].to_i) : nil
+              )
+
               company_user.save!
             end
           end
         end
-        redirect_to company_path(id: company.id, tab: 'users'), notice: 'Users imported'
+
+        if error_rows.any?
+          error_csv = generate_error_csv(error_rows)
+          file_path = Rails.root.join('tmp', "import_errors_#{Time.now.to_i}.csv")
+          File.write(file_path, error_csv)
+          file_url = download_error_csv(file_path.basename.to_s)
+          
+          respond_to do |format|
+            format.html { redirect_to company_path(id: company.id, tab: 'users', file_name: "import_errors_#{Time.now.to_i}.csv"), notice: 'Users imported' }
+          end
+        else
+          redirect_to company_path(id: company.id, tab: 'users'), notice: 'Users imported'
+        end
       end
     else
-      redirect_to root_url, notice: 'Company not found'
+      redirect_to root_url, alert: 'Company not found'
+    end
+  end
+
+  def download_error_csv(file_name)
+    file_path = Rails.root.join('tmp', file_name)
+    if File.exist?(file_path)
+      send_file file_path, type: 'text/csv', filename: file_name, disposition: 'attachment'
+    else
+      redirect_to users_path, alert: "File not found."
     end
   end
 
@@ -243,6 +279,16 @@ class UsersController < ApplicationController
   end
   
   private
+
+    def generate_error_csv(error_rows)
+      CSV.generate(headers: true) do |csv|
+        csv << ["email", "forename", "surname", "insurer", "vehicle_registration", "address", "telephone_number",  "Error Messages"]
+        error_rows.each do |row|
+          csv << [row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]]
+        end
+      end
+    end
+
     def set_user
       if current_user.is_admin?
         @user = User.unscoped.find(params[:id])
