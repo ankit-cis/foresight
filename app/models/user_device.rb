@@ -3,7 +3,7 @@ class UserDevice < ApplicationRecord
   
   has_many :videos
   
-  has_many :user_events
+  has_many :user_events, dependent: :destroy
   
   def self.company_secure
     if Company.is_admin == false
