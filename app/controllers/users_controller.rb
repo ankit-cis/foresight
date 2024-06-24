@@ -229,11 +229,8 @@ class UsersController < ApplicationController
                 row["telephone_number"],
                 "User Created"
               ]
-            end
-
-            if user.persisted?
               settings = user.company.setting
-              UserMailer.signup_confirmation(user.id, user.password).deliver_now unless settings.disable_user_emails
+              UserMailer.signup_confirmation(user.id, user.password).deliver_now if settings.disable_user_emails != true
 
               company_user = CompanyUser.new(
                 user_id: user.id,
