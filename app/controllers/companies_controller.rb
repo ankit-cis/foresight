@@ -115,7 +115,7 @@ class CompaniesController < ApplicationController
       file_path = Rails.root.join('tmp', params[:file_name])
 
       if File.exist?(file_path)
-        send_file file_path, type: 'text/csv', disposition: 'attachment', filename: 'subdomainPhysicians.csv'
+        send_file file_path, type: 'text/csv', disposition: 'attachment', filename: 'User_Import_Error_Log.csv'
       else
         render plain: "File not found", status: 404
       end

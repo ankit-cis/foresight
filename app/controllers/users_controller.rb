@@ -170,7 +170,16 @@ class UsersController < ApplicationController
               is_app_user: true,
               is_company_admin: false
             )
-
+            error_rows << [
+                row["email"],
+                row["forename"],
+                row["surname"],
+                row["insurer"],
+                row["vehicle_registration"],
+                row["address"],
+                row["telephone_number"],
+                "User Updated"
+              ]
             unless company_user.save
               if row["duration"].present?
                 existing_user.company_users.each do |license|
@@ -206,6 +215,19 @@ class UsersController < ApplicationController
                 row["address"],
                 row["telephone_number"],
                 user.errors.full_messages.join(", ")
+              ]
+            end
+
+            if user.save
+              error_rows << [
+                row["email"],
+                row["forename"],
+                row["surname"],
+                row["insurer"],
+                row["vehicle_registration"],
+                row["address"],
+                row["telephone_number"],
+                "User Created"
               ]
             end
 
@@ -282,7 +304,7 @@ class UsersController < ApplicationController
 
     def generate_error_csv(error_rows)
       CSV.generate(headers: true) do |csv|
-        csv << ["email", "forename", "surname", "insurer", "vehicle_registration", "address", "telephone_number",  "Error Messages"]
+        csv << ["email", "forename", "surname", "insurer", "vehicle_registration", "address", "telephone_number",  "Response"]
         error_rows.each do |row|
           csv << [row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]]
         end
