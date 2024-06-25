@@ -4,8 +4,18 @@ class ApplicationController < ActionController::Base
   around_action :scope_current_company
 
   # before_action :ensure_subdomain
-
+  rescue_from Exception, with: :render_500
   private
+
+  def render_500(exception = nil)
+    if exception
+      logger.info "Rendering 500 with exception: #{exception.message}"
+    end
+    respond_to do |format|
+      format.html { render file: Rails.root.join('public', '500.html'), status: :internal_server_error, layout: false }
+      format.all { head :internal_server_error }
+    end
+  end
 
   def ensure_subdomain
     if current_user
