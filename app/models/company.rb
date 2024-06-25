@@ -8,11 +8,12 @@ class Company < ApplicationRecord
   
   belongs_to :title
 
-  has_one :setting
-  has_many :company_users
+  has_one :setting, dependent: :destroy
+  has_many :company_users, dependent: :destroy
   has_many :users, through: :company_users
-  has_many :messages
-  has_many :videos
+  has_many :messages, dependent: :destroy
+  has_many :videos, dependent: :destroy
+  has_many :accidents, dependent: :destroy
 
   belongs_to :free_period
   
