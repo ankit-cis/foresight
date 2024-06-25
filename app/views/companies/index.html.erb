@@ -15,7 +15,9 @@
       <th>Contact Name</th>
       <th>Email</th>
       <th>Telephone</th>
-      <th>Action</th>
+      <% if current_user.is_admin? %>
+        <th>Action</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -28,7 +30,9 @@
         <td><%= "#{company.forename} #{company.surname}" %></td>
         <td><%= company.email %></td>
         <td><%= company.telephone_number %></td>
-        <td><%= link_to "Remove", company_path(id: company.id, tab: 'company'), method: :delete, data: { confirm: 'Are you sure you want to delete this company?' }, class: "btn btn-danger btn-rounded btn-sm" %></td>
+        <% if current_user.is_admin? %>
+          <td><%= link_to "Remove", company_path(id: company.id, tab: 'company'), method: :delete, data: { confirm: 'Are you sure you want to delete this company?' }, class: "btn btn-danger btn-rounded btn-sm" %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
