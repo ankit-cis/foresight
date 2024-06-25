@@ -3,12 +3,14 @@ class PasswordResetsController < ApplicationController
 
   def create
     user = User.find_by_email(params[:email])
-    user.set_password_reset_token if user
-    UserMailer.password_reset(user.id).deliver_now if user
-    
-    @email = params[:email]
-    render :password_sent
-    # redirect_to root_url, :notice => "Email sent with password reset instructions."
+    if user.present?
+      user.set_password_reset_token if user
+      UserMailer.password_reset(user.id).deliver_now if user
+      @email = params[:email]
+      render :password_sent
+    else
+      redirect_to new_password_reset_path, :notice => "Something went wrong. Please check that the user account exists"
+    end
   end
 
   def edit
