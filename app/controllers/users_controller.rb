@@ -216,19 +216,6 @@ class UsersController < ApplicationController
                 row["telephone_number"],
                 user.errors.full_messages.join(", ")
               ]
-            end
-
-            if user.save
-              error_rows << [
-                row["email"],
-                row["forename"],
-                row["surname"],
-                row["insurer"],
-                row["vehicle_registration"],
-                row["address"],
-                row["telephone_number"],
-                "User Created"
-              ]
               settings = user.company.setting
               UserMailer.signup_confirmation(user.id, user.password).deliver_now if settings.disable_user_emails != true
 
@@ -244,6 +231,16 @@ class UsersController < ApplicationController
 
               company_user.save!
             end
+            error_rows << [
+              row["email"],
+              row["forename"],
+              row["surname"],
+              row["insurer"],
+              row["vehicle_registration"],
+              row["address"],
+              row["telephone_number"],
+              "User Created"
+            ]
           end
         end
 
