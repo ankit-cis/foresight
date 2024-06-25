@@ -7,7 +7,7 @@ class PasswordResetsController < ApplicationController
       user.set_password_reset_token if user
       UserMailer.password_reset(user.id).deliver_now if user
       @email = params[:email]
-      render :password_sent
+      redirect_to login_url, :notice => "Mail has been send to reset your password"
     else
       redirect_to new_password_reset_path, :notice => "Something went wrong. Please check that the user account exists"
     end
