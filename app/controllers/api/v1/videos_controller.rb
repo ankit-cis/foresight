@@ -42,7 +42,7 @@ module Api
             end
           end
                     
-          VideoMailer.new_video_uploaded(@video.id).deliver_now
+          VideoMailer.new_video_uploaded(@video.id).deliver_later
           
           render :create, status: :created
         else
