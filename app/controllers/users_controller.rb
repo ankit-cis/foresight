@@ -230,7 +230,7 @@ class UsersController < ApplicationController
                 "User Created"
               ]
               settings = user.company.setting
-              UserMailer.signup_confirmation(user.id, user.password).deliver_now if settings.disable_user_emails != true
+              UserMailer.signup_confirmation(user.id, user.password).deliver_later if settings.disable_user_emails != true
 
               company_user = CompanyUser.new(
                 user_id: user.id,
