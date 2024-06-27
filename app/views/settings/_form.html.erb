@@ -13,7 +13,7 @@
 <% end %>
 
 <script>
-  $(document).on('click', '#company-dropdown', function() {
+  $(document).on('change', '#company-dropdown', function() {
     var selectedCompanyId = $(this).val();
     $.ajax({
       url: '/fetch_company_setting_values',

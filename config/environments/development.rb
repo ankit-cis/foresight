@@ -31,15 +31,26 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.perform_deliveries = true
-  config.web_console.whitelisted_ips = '195.191.164.168'
-  config.action_mailer.delivery_method = :sendmail
+#  config.web_console.whitelisted_ips = '195.191.164.168'
+ # config.action_mailer.delivery_method = :sendmail
+  #config.action_mailer.smtp_settings = {
+   # address: '195.191.164.168',
+    #port: 25,
+    #domain: 'svr02.digitalflair.co.uk'
+  #}
+  #config.action_mailer.default_url_options = { :host => "svr02.digitalflair.co.uk" }
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: '195.191.164.168',
-    port: 25,
-    domain: 'svr02.digitalflair.co.uk'
+    address: 'smtp.office365.com',
+    port: 587,
+    domain: 'get4sight.co.uk',
+    user_name: 'noreply@get4sight.co.uk',
+    password: 'd*##Y7QcZ30$',
+    authentication: :login,
+    enable_starttls_auto: true
   }
-  config.action_mailer.default_url_options = { :host => "svr02.digitalflair.co.uk" }
-  
+
+  config.action_mailer.default_url_options = { host: 'svr02.digitalflair.co.uk', protocol: 'https' }
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.

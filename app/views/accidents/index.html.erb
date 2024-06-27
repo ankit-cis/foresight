@@ -22,7 +22,7 @@
   <tbody>
     <% @accidents.each do |accident| %>
       <tr>
-        <td><%= accident.video.video_number %></td>      
+        <td><%= accident.video&.video_number %></td>      
         <td><%= link_to accident.user.display_name, accident %></td>
         <td><%= accident.registration_number %></td>
         <td><%= time_ago_in_words(accident.created_at) %> ago</td>
