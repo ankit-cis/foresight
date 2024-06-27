@@ -9,6 +9,6 @@ class AccidentMailer < ApplicationMailer
 
   def user_confirmation_new_accident(user_id)
     @user = User.find_by(id: user_id)
-    mail(to: user.email, subject: '4Sight: Accident details received.')
+    mail(to: @user.email, subject: '4Sight: Accident details received.')
   end
 end
