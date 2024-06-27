@@ -24,8 +24,8 @@ module Api
           video.company =  @accident.company
           video.save!
 
-          AccidentMailer.new_accident_uploaded(@accident.id).deliver_now
-          AccidentMailer.user_confirmation_new_accident(current_user.id).deliver_now
+          AccidentMailer.new_accident_uploaded(@accident.id).deliver_later
+          AccidentMailer.user_confirmation_new_accident(current_user.id).deliver_later
 
           render :create, status: :created
         else
