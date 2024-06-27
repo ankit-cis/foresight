@@ -30,7 +30,7 @@ class Video < ApplicationRecord
     if saved_change_to_status_id? && status.status_constant == "ACTIONED_FALSE_ALARM"
       settings = self.company.setting
       if settings&.disable_user_emails != true
-        StatusMailer.false_alarm(user.id).deliver_later
+        StatusMailer.false_alarm(user.id).deliver_now
       end
     end
   end
