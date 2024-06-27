@@ -68,7 +68,7 @@ class CompaniesController < ApplicationController
         
         settings = Setting.create(company_id: @company.id, disable_user_emails: false)
         if settings.disable_user_emails != true
-          UserMailer.signup_confirmation(user.id, password).deliver_later
+          UserMailer.signup_confirmation(user.id, password).deliver_now
         end
         
         format.html { redirect_to @company, notice: 'Company was successfully created.' }

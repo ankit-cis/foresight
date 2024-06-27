@@ -78,7 +78,7 @@ class SettingsController < ApplicationController
       user.set_password_reset_token
       user.save!
       
-      SettingsMailer.upgrade_reset(user.id).deliver_later
+      SettingsMailer.upgrade_reset(user.id).deliver_now
     end
     
     redirect_to @setting, notice: 'All passwords being reset.'

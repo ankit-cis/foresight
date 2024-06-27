@@ -103,7 +103,7 @@ class UsersController < ApplicationController
       if @user.save
         settings = @user.company.setting
         if settings.disable_user_emails != true
-          UserMailer.signup_confirmation(@user.id, password).deliver_later
+          UserMailer.signup_confirmation(@user.id, password).deliver_now
         end
         
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -279,7 +279,7 @@ class UsersController < ApplicationController
     @user.password = password
     @user.password_confirmation = password
     if @user.save
-      UserMailer.signup_confirmation(@user.id, password).deliver_later
+      UserMailer.signup_confirmation(@user.id, password).deliver_now
       redirect_to @user, notice: 'Welcome email resent.'
     else
       render :show
