@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+  <h1>Exception Notification</h1>
+  <p>An exception occurred in the application:</p>
+  <p><strong>Exception:</strong> <%= @exception.message %></p>
+  <p><strong>Backtrace:</strong></p>
+  <pre><%= @exception.backtrace.join("\n") %></pre>
+</body>
+</html>
