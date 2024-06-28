@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def render_500(exception = nil)
     if exception
-      # ExceptionNotifierMailer.notify_exception(exception).deliver_now
+      ExceptionNotifierMailer.notify_exception(exception).deliver_now
       logger.info "Rendering 500 with exception: #{exception.message}"
     end
     respond_to do |format|
