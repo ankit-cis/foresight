@@ -30,7 +30,7 @@ class PasswordResetsController < ApplicationController
         session.destroy
       end
       if @user.is_admin? || @user.is_company_admin?(@user.company)
-        redirect_to login_url, :notice => "Mail has been send to reset your password"
+        redirect_to login_url, :notice => "Your password has been set successfully."
       else
         render :password_set_app
       end
