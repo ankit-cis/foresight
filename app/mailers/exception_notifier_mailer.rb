@@ -3,6 +3,6 @@ class ExceptionNotifierMailer < ApplicationMailer
 
   def notify_exception(exception)
     @exception = exception
-    mail(to: 'nettestuser12@mailinator.com', subject: 'Exception Notification')
+    mail(to: 'paul@digitalflair.co.uk', subject: 'Exception Notification')
   end
 end
