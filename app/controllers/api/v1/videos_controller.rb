@@ -51,7 +51,8 @@ module Api
       end
 
       def update
-        if @video.update(video_params)
+        filtered_params = video_params.except(:lat, :long)
+        if @video.update(filtered_params)
           if !params[:speeds].nil?
             params[:speeds].each do |speed|
               new_speed = @video.speeds.build
