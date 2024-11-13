@@ -48,6 +48,14 @@
           </div>
         </div>
       <% end %>
+
+      <div class="row">
+        <div class="col-lg-6 dashboard-item">
+          <%= link_to dash_cam_videos_path do %>
+            <%= render partial: 'dashboard_item', locals: {title: 'Dashcam Recorded Videos', icon: "fa-shield", color: "bg-secondary" } %>
+          <% end %>
+        </div>
+      </div>
     </div>
     <div class="col-lg-6">
       <div class="row">
@@ -62,6 +70,7 @@
         <div class="col-lg-6">
           <%= render partial: 'dashboard_item', locals: {title: 'App Users', icon: "fa-users", value: @user_count, color: "bg-primary" } %>
         </div>
+
       </div>
     </div>
   </div>
