@@ -85,8 +85,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :dash_cam_videos
-
   root :to => "dashboard#index"
 
   get "#{Rails.root.to_s}/public/:file_path",
