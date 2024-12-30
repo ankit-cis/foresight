@@ -18,9 +18,9 @@ class AccidentsController < ApplicationController
     end
 
     if params[:paged] == "false"
-      @accidents = @search.result.includes(:user, :video).order(created_at: :desc)
+      @accidents = @search.result.includes(:user, :videos).order(created_at: :desc)
     else
-      @accidents = @search.result.includes(:user, :video).order(created_at: :desc).page params[:page]
+      @accidents = @search.result.includes(:user, :videos).order(created_at: :desc).page params[:page]
     end
     if params[:q]
       @active_search = true
@@ -64,13 +64,14 @@ class AccidentsController < ApplicationController
   def update
     respond_to do |format|
       if @accident.update(accident_params)
-        
-        if !@accident.video.nil? && (@accident.video.status_id != @accident.status_id)
-          video = @accident.video
-          video.status_id = @accident.status_id
-          video.save!
+        if @accident.videos.any?
+          @accident.videos.each do |video|
+            if video.status_id != @accident.status_id
+              video.status_id = @accident.status_id
+              video.save!
+            end
+          end
         end
-        
         format.html { redirect_to @accident, notice: 'Accident was successfully updated.' }
         format.json { render :show, status: :ok, location: @accident }
       else
