@@ -3,7 +3,7 @@ class Accident < ApplicationRecord
   belongs_to :company
   belongs_to :status
   
-  has_one :video, dependent: :destroy
+  has_many :videos, dependent: :destroy
   has_many :vehicles, inverse_of: :accident, dependent: :destroy
   has_many :photos, inverse_of: :accident, dependent: :destroy
   has_many :witnesses, inverse_of: :accident, dependent: :destroy

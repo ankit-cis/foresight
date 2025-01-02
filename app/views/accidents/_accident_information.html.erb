@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <%= @accident.video.video_number %> : Accident Information
+    <%= @accident.videos.map(&:video_number) %> : Accident Information
     <%
       if @accident.status.status_constant == "REPORTED"
         class_name = "btn-danger"
@@ -41,7 +41,15 @@
       </div>
       <div class="col-xs-6 col-md-6">            
         <strong>Accident Occured:</strong>
-        <p><%= @accident.video.crash_detected_time != nil ? @accident.video.crash_detected_time.strftime("%e %B %Y at %I:%M %p") : @accident.created_at.strftime("%e %B %Y at %I:%M %p") %></p>
+        <% if @accident.videos.any? %>
+          <% @accident.videos.each do |video| %>
+            <p>
+              <%= video.crash_detected_time.present? ? video.crash_detected_time.strftime("%e %B %Y at %I:%M %p") : @accident.created_at.strftime("%e %B %Y at %I:%M %p") %>
+            </p>
+          <% end %>
+        <% else %>
+          <p><%= @accident.created_at.strftime("%e %B %Y at %I:%M %p") %></p>
+        <% end %>      
       </div>
       
       <div class="col-xs-6 col-md-6">            
