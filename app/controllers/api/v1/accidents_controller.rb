@@ -5,12 +5,10 @@ module Api
       before_action :set_accident, only: [:update]
 
       def create
-        @accident = current_user.accidents.build(accident_params.except(:video_id))
+        @accident = current_user.accidents.build(accident_params.except(:video_ids))
 
         @accident.user = current_user
-
         @accident.status = Status.find_by_status_constant('REPORTED')
-
         @accident.company = current_user.company
 
         if !(params["accident"]["country"] == "United Kingdom" || params["accident"]["country"] == "England")
@@ -19,10 +17,13 @@ module Api
         end
 
         if @accident.save
-          video = Video.find(accident_params[:video_id])
-          video.accident = @accident
-          video.company =  @accident.company
-          video.save!
+          video_ids = accident_params[:video_ids]
+          if video_ids.present?
+            videos = Video.where(id: video_ids)
+            videos.each do |video|
+              video.update!(accident: @accident, company: @accident.company)
+            end
+          end
 
           AccidentMailer.new_accident_uploaded(@accident.id).deliver_later
           AccidentMailer.user_confirmation_new_accident(current_user.id).deliver_later
@@ -50,7 +51,7 @@ module Api
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def accident_params
-        params.require(:accident).permit(:video_id, :lat, :long, :registration_number,
+        params.require(:accident).permit(video_ids: [], :lat, :long, :registration_number,
                                          witnesses_attributes: %i[name telephone_number
                                                                   addresspostcode],
                                          vehicles_attributes: %i[registration_number
