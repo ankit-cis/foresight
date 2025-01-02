@@ -5,12 +5,10 @@ module Api
       before_action :set_accident, only: [:update]
 
       def create
-        @accident = current_user.accidents.build(accident_params.except(:video_id))
+        @accident = current_user.accidents.build(accident_params.except(:video_id, :secondary_video_id))
 
         @accident.user = current_user
-
         @accident.status = Status.find_by_status_constant('REPORTED')
-
         @accident.company = current_user.company
 
         if !(params["accident"]["country"] == "United Kingdom" || params["accident"]["country"] == "England")
@@ -19,10 +17,19 @@ module Api
         end
 
         if @accident.save
-          video = Video.find(accident_params[:video_id])
-          video.accident = @accident
-          video.company =  @accident.company
-          video.save!
+          if accident_params[:video_id].present?
+            video = Video.find(accident_params[:video_id])
+            video.accident = @accident
+            video.company = @accident.company
+            video.save!
+          end
+
+          if accident_params[:secondary_video_id].present?
+            secondary_video = Video.find(accident_params[:secondary_video_id])
+            secondary_video.accident = @accident
+            secondary_video.company = @accident.company
+            secondary_video.save!
+          end
 
           AccidentMailer.new_accident_uploaded(@accident.id).deliver_later
           AccidentMailer.user_confirmation_new_accident(current_user.id).deliver_later
@@ -50,7 +57,7 @@ module Api
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def accident_params
-        params.require(:accident).permit(:video_id, :lat, :long, :registration_number,
+        params.require(:accident).permit(:video_id, :secondary_video_id, :lat, :long, :registration_number,
                                          witnesses_attributes: %i[name telephone_number
                                                                   addresspostcode],
                                          vehicles_attributes: %i[registration_number
