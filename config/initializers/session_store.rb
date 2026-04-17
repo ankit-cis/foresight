@@ -4,7 +4,7 @@ if Rails.env.development?
   puts "*************************************************"
   puts "**       Running in Development Mode...        **"
   puts "*************************************************"
-  Rails.application.config.session_store :cookie_store, key: '_four_sight_plus_rails_session', :domain => ".digitalflair.co.uk"
+  Rails.application.config.session_store :cookie_store, key: '_four_sight_plus_rails_session', :domain => ".autologistic.co.uk"
 elsif Rails.env.test?
   puts "*************************************************"
   puts "**          Running in Test Mode...            **"
