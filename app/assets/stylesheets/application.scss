@@ -17,11 +17,14 @@ $ibox-content-bg: white;  // IBox Background content
 @import "bootstrap-datepicker";
 
 .full {
-    background: image-url("bg.png") no-repeat right bottom fixed;
+    background: image-url("bg.jpg") no-repeat right bottom fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+.full.sessions-page {
+    background-image: image-url("login_bg.jpg");
 }
 body { 
     background-color: transparent;

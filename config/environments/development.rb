@@ -39,7 +39,9 @@ Rails.application.configure do
     #domain: 'svr02.digitalflair.co.uk'
   #}
   #config.action_mailer.default_url_options = { :host => "svr02.digitalflair.co.uk" }
-  config.action_mailer.delivery_method = :smtp
+ #ENV['SSL_CERT_FILE'] = '/etc/ssl/certs/ca-certificates.crt'
+ #ENV['SSL_CERT_DIR']  = '/etc/ssl/certs' 
+ config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: 'smtp.office365.com',
     port: 587,
@@ -50,7 +52,7 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  config.action_mailer.default_url_options = { host: 'svr02.digitalflair.co.uk', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'transport.autologistic.co.uk', protocol: 'https' }
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.
@@ -74,5 +76,5 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  #config.hosts << 'zmsad.preview.prostack.host'
+  config.hosts = ['transport.autologistic.co.uk', 'svr02.digitalflair.co.uk']
 end
