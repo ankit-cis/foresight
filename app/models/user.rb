@@ -80,7 +80,10 @@ class User < ApplicationRecord
   end
   
   def is_company_admin?(company)
-    self.company_users.where(company_id: company.id).first.is_company_admin?
+    return false if company.nil?
+
+    company_user = company_users.find_by(company_id: company.id)
+    company_user.present? && company_user.is_company_admin?
   end
   
 
