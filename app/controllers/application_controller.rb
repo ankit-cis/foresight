@@ -9,9 +9,15 @@ class ApplicationController < ActionController::Base
 
   def render_500(exception = nil)
     if exception
-      ExceptionNotifierMailer.notify_exception(exception).deliver_later
+      ExceptionNotifierMailer.notify_exception(exception).deliver_now
       logger.info "Rendering 500 with exception: #{exception.message}"
     end
+    respond_to do |format|
+      format.html { render file: Rails.root.join('public', '500.html'), status: :internal_server_error, layout: false }
+      format.all { head :internal_server_error }
+    end
+  rescue => mailer_error
+    logger.error "render_500 failed while sending notification: #{mailer_error.message}"
     respond_to do |format|
       format.html { render file: Rails.root.join('public', '500.html'), status: :internal_server_error, layout: false }
       format.all { head :internal_server_error }
@@ -74,7 +80,7 @@ class ApplicationController < ActionController::Base
   
   
   def current_company    
-    current_user.company
+    current_user&.company
   end
   helper_method :current_company
 
