@@ -4,15 +4,15 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
 
-  # storage :aws
   storage :file
 
-  configure do |config|
-    config.asset_host = 'https://s3-eu-west-1.amazonaws.com/foresight-messages-images'
-    config.aws_bucket = 'foresight-messages-images'
-    config.aws_acl = 'public_read'
-    config.aws_signer = nil
-  end
+  # The legacy S3 configuration is disabled because uploads should stay on the existing server.
+  # configure do |config|
+  #   config.asset_host = 'https://s3-eu-west-1.amazonaws.com/foresight-messages-images'
+  #   config.aws_bucket = 'foresight-messages-images'
+  #   config.aws_acl = 'public_read'
+  #   config.aws_signer = nil
+  # end
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir

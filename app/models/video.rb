@@ -36,30 +36,10 @@ class Video < ApplicationRecord
   end
   
   def presigned_url
-     s3 = Aws::S3::Resource.new(region:'eu-west-1')
+    incident_video&.url
+  end
 
-     if Rails.env.development?
-       obj = s3.bucket('foursight-images-development').object("uploads/video/incident_video/#{id}/#{id}.mp4")
-     else
-       obj = s3.bucket('foursight-images-production').object("uploads/video/incident_video/#{id}/#{id}.mp4")
-     end
-
-     url = URI.parse(obj.presigned_url(:put))
-    
-     return url
-   end
-   
-   def presigned_get_url
-      s3 = Aws::S3::Resource.new(region:'eu-west-1')
-
-      if Rails.env.development?
-        obj = s3.bucket('foursight-images-development').object("uploads/video/incident_video/#{id}/#{id}.mp4")
-      else
-        obj = s3.bucket('foursight-images-production').object("uploads/video/incident_video/#{id}/#{id}.mp4")
-      end
-
-      url = URI.parse(obj.presigned_url(:get))
-    
-      return url
-    end
+  def presigned_get_url
+    incident_video&.url
+  end
 end
